@@ -1,0 +1,5 @@
+## Image (resized) by Layla - 2026-10-08 22:11 UTC
+### Context
+A smaller copy of /images/ministre-froide-2.png (1024×1200 → 683×800, jpg) — the same picture; the original is untouched.
+### Vision
+A young woman in a black military uniform sits behind a matte black desk, her hands placed flat on the surface in front of her. She has olive skin with freckles across the nose, dark brown hair pulled back into a tight low bun, and wears round gold-rimmed glasses. Her expression is empty and neutral, with no smile, and she looks directly at the camera. The uniform has a high collar, buttoned front, gold rank insignia on both shoulder epaulettes, and a small light-blue bird or dove emblem on the left collar. The setting is a dark grey concrete room with plain walls and a concrete floor, lit by harsh, flat overhead lighting with no warmth or color accent. The shot is taken from a slight high angle looking down at the subject. The image has a grainy, raw phone-camera quality with visible skin texture and pores, and no painterly or artistic effects. The overall mood is cold, austere, and clinical. No text is visible.
