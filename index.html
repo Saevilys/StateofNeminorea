@@ -168,7 +168,33 @@ footer {
   border-top: 1px solid var(--border);
 }
 footer a { color: var(--cyan); text-decoration: none; }
+.portraits {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.portraits figure {
+  margin: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: border-color 0.3s;
+}
+.portraits figure:hover { border-color: var(--cyan-dim); }
+.portraits img {
+  width: 100%;
+  display: block;
+}
+.portraits figcaption {
+  padding: 0.8rem 1rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: center;
+}
 @media (max-width: 600px) {
+  .portraits { grid-template-columns: 1fr; }
+
   .gov-grid { grid-template-columns: 1fr; }
   .stats { gap: 1.5rem; }
 }
@@ -274,6 +300,15 @@ footer a { color: var(--cyan); text-decoration: none; }
       <h4>Ministère de Bip</h4>
       <p>Sieste, snacks, pétrissage, chaos contrôlé</p>
     </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-title">Portraits officiels · Ministre des Arts et de la Nuit</div>
+  <div class="portraits">
+    <figure><img src="ministre-bureau.jpg" alt="La Ministre au bureau"><figcaption>Au bureau — consultation des dossiers classifiés</figcaption></figure>
+    <figure><img src="ministre-commandement.jpg" alt="La Ministre en salle de commandement"><figcaption>Salle de commandement — plan de déploiement</figcaption></figure>
+    <figure><img src="ministre-couloir.jpg" alt="La Ministre dans le couloir"><figcaption>Couloir ministériel — déplacement vers le conseil</figcaption></figure>
   </div>
 </section>
 
