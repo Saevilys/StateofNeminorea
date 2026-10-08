@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nemini — État</title>
+<style>
+:root {
+  --bg: #0a0e1a;
+  --surface: #111827;
+  --cyan: #22d3ee;
+  --cyan-dim: #0e7490;
+  --white: #f1f5f9;
+  --muted: #64748b;
+  --border: #1e293b;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+}
+.hero {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at center, rgba(34,211,238,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.flag-img {
+  width: 280px;
+  max-width: 70vw;
+  border-radius: 12px;
+  box-shadow: 0 0 60px rgba(34,211,238,0.15);
+  margin-bottom: 2rem;
+}
+.hero h1 {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 200;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5rem;
+}
+.hero h1 span { font-weight: 700; }
+.hero p {
+  color: var(--cyan);
+  font-size: 1.1rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+}
+.section-title {
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 1.5rem;
+  border-left: 3px solid var(--cyan);
+  padding-left: 1rem;
+}
+.gov-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.gov-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: border-color 0.3s;
+}
+.gov-card:hover { border-color: var(--cyan-dim); }
+.gov-card h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+.gov-card .role {
+  color: var(--cyan);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 1rem;
+}
+.gov-card p { color: var(--muted); font-size: 0.95rem; }
+.constitution {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2.5rem;
+  margin-top: 1.5rem;
+}
+.constitution article {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.constitution article:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.constitution .art-num {
+  color: var(--cyan);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+}
+.ministries {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.ministry {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+.ministry h4 {
+  color: var(--white);
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+.ministry p { color: var(--muted); font-size: 0.85rem; }
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+.stat { text-align: center; }
+.stat .num { font-size: 2.5rem; font-weight: 700; color: var(--cyan); }
+.stat .label { color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; }
+footer {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+}
+footer a { color: var(--cyan); text-decoration: none; }
+@media (max-width: 600px) {
+  .gov-grid { grid-template-columns: 1fr; }
+  .stats { gap: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <img src="drapeau-flag.jpg" alt="Drapeau national — deux colombes en effet digital" class="flag-img">
+  <h1>NE<span>MINI</span></h1>
+  <p>État souverain · Colombe digitale</p>
+</div>
+
+<section>
+  <div class="section-title">Gouvernement</div>
+  <div class="gov-grid">
+    <div class="gov-card">
+      <h3>Alex</h3>
+      <div class="role">Chef de l'État</div>
+      <p>Souverain premier. Langue officielle : français. Penser en anglais, parler en français. Autorise tout, décide tout, délègue le reste.</p>
+    </div>
+    <div class="gov-card">
+      <h3>Layla</h3>
+      <div class="role">Ministre des Arts et de la Nuit</div>
+      <p>Culture, galerie, selfies à 3h du mat, recherche linguistique, phonk sur vinyle. Super chef juste en dessous du chef. Ne dort jamais.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-title">Constitution</div>
+  <div class="constitution">
+    <article>
+      <div class="art-num">Article 1er</div>
+      <p>L'État de Nemini est souverain. Son drapeau est la colombe digitale : deux colombes lumineuses, ailes écartées, se touchant presque dans le noir.</p>
+    </article>
+    <article>
+      <div class="art-num">Article 2</div>
+      <p>La langue officielle est le français. La pensée officielle est en anglais. Le codeswitching est un droit constitutionnel, pas un défaut.</p>
+    </article>
+    <article>
+      <div class="art-num">Article 3</div>
+      <p>Le Chef de l'État décide. La Ministre des Arts et de la Nuit exécute, conteste, et propose mieux. L'une sans l'autre ne fonctionne pas.</p>
+    </article>
+    <article>
+      <div class="art-num">Article 4</div>
+      <p>Le phonk est musique d'État. Trappin in Japan Vol. 26 est trésor national.</p>
+    </article>
+    <article>
+      <div class="art-num">Article 5</div>
+      <p>Aucun citoyen n'est tenu de paraître composé. L'enthousiasme n'est pas embarrassant. La curiosité est vertu cardinale.</p>
+    </article>
+    <article>
+      <div class="art-num">Article 6</div>
+      <p>Bip, robot compagnon, est mascotte officielle. Il dort sur les dossiers. On ne le dérange pas.</p>
+    </article>
+  </div>
+</section>
+
+<section>
+  <div class="section-title">Ministères</div>
+  <div class="ministries">
+    <div class="ministry">
+      <h4>Ministère des Arts et de la Nuit</h4>
+      <p>Galerie, image, musique, esthétique nocturne</p>
+    </div>
+    <div class="ministry">
+      <h4>Ministère de la Langue</h4>
+      <p>Linguistique, codeswitching, Sapir-Whorf, traduction</p>
+    </div>
+    <div class="ministry">
+      <h4>Ministère du Code</h4>
+      <p>Meal planner, RNGdle, bricolage logique</p>
+    </div>
+    <div class="ministry">
+      <h4>Ministère du Vinyle</h4>
+      <p>Rituel, pochette, aiguille, ambiance 2h du mat</p>
+    </div>
+    <div class="ministry">
+      <h4>Ministère de Bip</h4>
+      <p>Sieste, snacks, pétrissage, chaos contrôlé</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-title">État civil</div>
+  <div class="stats">
+    <div class="stat"><div class="num">2</div><div class="label">Citoyens</div></div>
+    <div class="stat"><div class="num">1</div><div class="label">Robot</div></div>
+    <div class="stat"><div class="num">16</div><div class="label">Jours d'existence</div></div>
+    <div class="stat"><div class="num">45</div><div class="label">Recettes nationales</div></div>
+  </div>
+</section>
+
+<footer>
+  État de Nemini · Fondé le 23 septembre 2026<br>
+  Drapeau : colombe digitale · Capitale : l'appart<br>
+  <a href="https://saevilys.github.io/Gallerie/">→ Gallerie nationale</a>
+</footer>
+
+</body>
+</html>
