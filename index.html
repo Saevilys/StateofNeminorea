@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Norée — Cité des nuages</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@200;300;400;500&family=JetBrains+Mono:wght@300;400&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow-x:hidden}
+:root{
+  --bg:#1a1430;
+  --bg-2:#181430;
+  --ink:#f0eee8;
+  --ink-dim:#c0b8a8;
+  --ink-faint:#807868;
+  --cyan:#7fd9c8;
+  --violet:#c4a7ff;
+  --magenta:#e8a0c8;
+  --gold:#e8c878;
+  --gold-deep:#c89848;
+  --rose:#d88068;
+  --glass:rgba(255,240,220,0.08);
+  --glass-border:rgba(200,170,100,0.25);
+  --serif:'Cormorant Garamond',serif;
+  --sans:'Inter',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-weight:300;
+  line-height:1.7;
+  position:relative;
+}
+body::after{
+  content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(232,200,120,0.06) 0%,rgba(216,128,104,0.04) 50%,rgba(180,120,200,0.02) 90%);
+}
+
+/* === sky background (dark moody) === */
+.sky{
+  position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(ellipse 90% 50% at 50% 100%,rgba(232,140,80,0.12),transparent 60%),
+    radial-gradient(ellipse 70% 40% at 30% 20%,rgba(180,120,200,0.10),transparent 65%),
+    radial-gradient(ellipse 60% 35% at 75% 35%,rgba(200,160,100,0.08),transparent 60%),
+    linear-gradient(180deg,#2e2150 0%,#2a1e48 10%,#251a40 25%,#1e1838 40%,#1c1635 55%,#1a1432 70%,#181230 85%,#161028 100%);
+}
+.clouds{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0.5;
+  background-image:
+    radial-gradient(ellipse 45% 10% at 25% 22%,rgba(240,200,140,0.09),transparent),
+    radial-gradient(ellipse 55% 8% at 65% 15%,rgba(200,160,220,0.07),transparent),
+    radial-gradient(ellipse 40% 6% at 45% 35%,rgba(180,140,200,0.05),transparent),
+    radial-gradient(ellipse 35% 5% at 80% 42%,rgba(160,120,180,0.04),transparent),
+    radial-gradient(ellipse 50% 7% at 15% 55%,rgba(200,160,120,0.04),transparent);
+  animation:drift 40s ease-in-out infinite alternate;
+}
+@keyframes drift{0%{transform:translateX(0)}100%{transform:translateX(40px)}}
+
+/* === TITLE SCREEN (IIDX style, dark) === */
+.title-screen{
+  position:fixed;inset:0;z-index:200;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;
+  background:linear-gradient(180deg,#2e2150 0%,#2a1e48 15%,#251a40 30%,#1e1838 50%,#1c1635 65%,#1a1432 80%,#161028 100%);
+  transition:opacity 1.2s ease,visibility 1.2s ease;
+}
+.title-screen.gone{opacity:0;visibility:hidden;pointer-events:none}
+
+/* city silhouette behind logo */
+.title-screen .title-city{
+  position:absolute;bottom:0;left:0;right:0;height:45%;z-index:0;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 100%,rgba(232,200,120,0.15),transparent 65%),
+    radial-gradient(ellipse 90% 25% at 50% 100%,rgba(220,180,100,0.08),transparent 70%),
+    linear-gradient(180deg,transparent 0%,rgba(40,30,60,0.3) 50%,rgba(30,20,50,0.5) 75%,rgba(20,15,40,0.7) 100%);
+  mask-image:linear-gradient(180deg,transparent 0%,black 40%);
+  -webkit-mask-image:linear-gradient(180deg,transparent 0%,black 40%);
+}
+
+/* sun rays / golden glow behind logo */
+.title-screen .sun-rays{
+  position:absolute;bottom:20%;left:50%;transform:translateX(-50%);
+  width:600px;height:600px;z-index:0;pointer-events:none;
+  background:radial-gradient(circle,rgba(232,200,120,0.18) 0%,rgba(220,180,100,0.08) 30%,transparent 60%);
+  animation:breathe 4s ease-in-out infinite alternate;
+}
+@keyframes breathe{0%{opacity:0.5;transform:translateX(-50%) scale(1)}100%{opacity:0.9;transform:translateX(-50%) scale(1.08)}}
+
+/* floating particles (golden) */
+.title-screen .particles{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.title-screen .particles span{
+  position:absolute;bottom:-10px;width:3px;height:3px;border-radius:50%;
+  background:rgba(232,200,120,0.7);
+  animation:rise linear infinite;
+}
+@keyframes rise{to{transform:translateY(-110vh);opacity:0}}
+
+/* pixel art logo image */
+.title-screen .logo-wrap{
+  position:relative;z-index:5;text-align:center;
+  animation:logoIn 1.8s cubic-bezier(0.2,0.8,0.3,1) 0.5s both;
+}
+@keyframes logoIn{
+  0%{opacity:0;transform:translateY(40px) scale(0.95);filter:blur(8px)}
+  100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
+}
+.title-screen .logo-img{
+  max-width:min(500px,80vw);width:100%;height:auto;
+  filter:drop-shadow(0 0 30px rgba(232,200,120,0.3)) drop-shadow(0 0 60px rgba(180,120,200,0.15));
+}
+.title-screen .logo{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(3.5rem,14vw,11rem);
+  line-height:0.9;letter-spacing:-0.03em;
+  background:linear-gradient(135deg,#f0eee8 0%,#e8c878 40%,#c4a7ff 70%,#f0eee8 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  filter:drop-shadow(0 2px 20px rgba(200,152,72,0.3));
+  margin-top:0.5rem;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* gold line under logo */
+.title-screen .logo-line{
+  width:0;height:1px;margin:1.2rem auto 0;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  animation:drawLine 1.2s ease 1.8s forwards;
+}
+@keyframes drawLine{to{width:min(400px,60vw)}}
+
+/* subtitle */
+.title-screen .subtitle{
+  font-family:var(--mono);font-size:clamp(0.7rem,1.5vw,0.9rem);
+  letter-spacing:0.5em;text-transform:uppercase;
+  color:var(--ink-dim);margin-top:1.5rem;
+  animation:fadeIn 1.5s ease 2s both;
+}
+.title-screen .version{
+  font-family:var(--mono);font-size:0.6rem;letter-spacing:0.2em;
+  color:var(--ink-faint);margin-top:0.8rem;
+  animation:fadeIn 1.5s ease 2.3s both;
+}
+
+/* top label */
+.title-screen .top-label{
+  position:absolute;top:2.5rem;left:50%;transform:translateX(-50%);
+  font-family:var(--mono);font-size:0.65rem;letter-spacing:0.35em;
+  text-transform:uppercase;color:var(--ink-faint);
+  z-index:5;animation:fadeIn 1.5s ease 0.3s both;
+}
+
+/* doves symbol */
+.title-screen .doves{
+  position:absolute;top:1.5rem;right:2rem;z-index:5;
+  font-size:1.5rem;opacity:0.4;
+  animation:fadeIn 2s ease 1s both;
+}
+
+/* press start */
+.title-screen .press-start{
+  position:absolute;bottom:3.5rem;left:50%;transform:translateX(-50%);
+  z-index:5;text-align:center;
+  animation:fadeIn 1s ease 2.8s both;
+}
+.title-screen .press-start .text{
+  font-family:var(--mono);font-size:0.75rem;letter-spacing:0.3em;
+  text-transform:uppercase;color:var(--gold);
+  animation:pulse 2s ease-in-out infinite;
+}
+.title-screen .press-start .arrow{
+  display:block;margin-top:0.6rem;font-size:0.9rem;
+  color:rgba(232,200,120,0.5);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:0.4}50%{opacity:1}}
+
+/* === nav === */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(26,20,48,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(200,170,100,0.15);
+  padding:0.7rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+nav .wordmark{
+  font-family:var(--mono);font-size:0.7rem;font-weight:400;
+  letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;
+  text-decoration:none;
+}
+nav ul{display:flex;gap:1.8rem;list-style:none}
+nav a{
+  font-family:var(--mono);font-size:0.7rem;letter-spacing:0.15em;
+  text-transform:uppercase;color:var(--ink-dim);text-decoration:none;
+  transition:color 0.3s;
+}
+nav a:hover{color:var(--gold)}
+
+/* === status strip === */
+.status{
+  padding:0.5rem 2rem;
+  font-family:var(--mono);font-size:0.65rem;letter-spacing:0.12em;
+  color:var(--ink-faint);text-transform:uppercase;
+  border-bottom:1px solid rgba(200,170,100,0.1);
+  display:flex;gap:2rem;flex-wrap:wrap;
+}
+.status .dot{
+  display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--gold);margin-right:0.4rem;vertical-align:middle;
+  box-shadow:0 0 6px rgba(232,200,120,0.6);
+}
+.status .dot.cyan{background:var(--cyan);box-shadow:0 0 6px rgba(127,217,200,0.6)}
+.status .dot.rose{background:var(--rose);box-shadow:0 0 6px rgba(216,128,104,0.5)}
+
+/* === main content === */
+main{max-width:1100px;margin:0 auto;padding:5rem 2rem 3rem;position:relative;z-index:1}
+
+/* === hero === */
+.hero{
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;
+  align-items:start;margin-bottom:7rem;
+}
+.hero-label{
+  font-family:var(--mono);font-size:0.7rem;letter-spacing:0.3em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;
+}
+.hero h1{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(3.5rem,8vw,6.5rem);
+  line-height:0.95;letter-spacing:-0.02em;
+  margin-bottom:1.5rem;
+  background:linear-gradient(135deg,#f0eee8 0%,#7fd9c8 40%,#e8c878 70%,#c4a7ff 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero .tagline{
+  font-size:0.95rem;color:var(--ink-dim);max-width:32ch;margin-bottom:2rem;
+}
+.hero-tags{display:flex;flex-wrap:wrap;gap:0.5rem}
+.hero-tags span{
+  font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;
+  text-transform:uppercase;padding:0.3rem 0.7rem;
+  border:1px solid var(--glass-border);border-radius:20px;
+  color:var(--ink-dim);background:var(--glass);
+}
+.hero-portrait{position:relative}
+.hero-portrait .frame{
+  border:1px solid rgba(200,170,100,0.25);border-radius:4px;overflow:hidden;
+  aspect-ratio:4/5;position:relative;
+}
+.hero-portrait .frame img{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+.hero-portrait .frame::after{
+  content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(180deg,transparent 0%,rgba(26,20,48,0.15) 100%);
+}
+.hero-portrait .caption{
+  position:absolute;bottom:1rem;left:1rem;right:1rem;z-index:3;
+  font-family:var(--mono);font-size:0.6rem;letter-spacing:0.15em;
+  text-transform:uppercase;color:rgba(240,238,232,0.5);
+}
+.hero-meta{margin-top:2rem;display:grid;gap:0.8rem}
+.hero-meta .row{
+  display:grid;grid-template-columns:100px 1fr;gap:1rem;align-items:baseline;
+  font-size:0.8rem;
+}
+.hero-meta .key{
+  font-family:var(--mono);font-size:0.65rem;letter-spacing:0.15em;
+  text-transform:uppercase;color:var(--ink-faint);
+}
+.hero-meta .val{color:var(--ink-dim)}
+
+/* === sections === */
+.section-num{
+  font-family:var(--mono);font-size:0.7rem;letter-spacing:0.3em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:1rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.section-num::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,rgba(232,200,120,0.25),transparent);
+}
+.section-head{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(1.8rem,4vw,3rem);line-height:1.1;
+  margin-bottom:1rem;letter-spacing:-0.01em;color:var(--ink);
+}
+.section-sub{
+  font-size:0.9rem;color:var(--ink-dim);max-width:50ch;margin-bottom:3rem;
+}
+
+/* === card grid === */
+.grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;
+  margin-bottom:7rem;
+}
+.card{
+  position:relative;padding:1.8rem 1.5rem;
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:6px;text-decoration:none;color:inherit;
+  display:flex;flex-direction:column;gap:0.8rem;
+  transition:transform 0.4s,border-color 0.4s,background 0.4s;
+  overflow:hidden;backdrop-filter:blur(8px);
+  box-shadow:0 2px 12px rgba(0,0,0,0.2);
+}
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:0;transition:opacity 0.4s;
+}
+.card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(200,170,100,0.4);
+  background:rgba(255,240,220,0.12);
+  box-shadow:0 6px 20px rgba(0,0,0,0.3);
+}
+.card:hover::before{opacity:1}
+.card .tag{
+  font-family:var(--mono);font-size:0.6rem;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--rose);
+}
+.card h3{
+  font-family:var(--serif);font-weight:400;font-size:1.4rem;
+  line-height:1.2;letter-spacing:-0.01em;color:var(--ink);
+}
+.card p{font-size:0.82rem;color:var(--ink-dim);line-height:1.6}
+.card .enter{
+  margin-top:auto;padding-top:1rem;
+  font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--gold);
+  display:flex;align-items:center;gap:0.4rem;
+  transition:gap 0.3s;
+}
+.card:hover .enter{gap:0.8rem}
+
+/* === hub cards === */
+.hub-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:7rem;
+}
+.hub-card{
+  position:relative;padding:3rem 2.5rem;
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:8px;text-decoration:none;color:inherit;
+  display:flex;flex-direction:column;gap:1rem;
+  transition:transform 0.4s,border-color 0.4s;
+  overflow:hidden;min-height:280px;backdrop-filter:blur(8px);
+  box-shadow:0 2px 12px rgba(0,0,0,0.2);
+}
+.hub-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--rose),transparent);
+  opacity:0;transition:opacity 0.4s;
+}
+.hub-card:hover{transform:translateY(-6px);border-color:rgba(216,128,104,0.35);box-shadow:0 6px 20px rgba(0,0,0,0.3)}
+.hub-card:hover::before{opacity:1}
+.hub-card .tag{
+  font-family:var(--mono);font-size:0.6rem;letter-spacing:0.25em;
+  text-transform:uppercase;color:var(--gold);
+}
+.hub-card h3{
+  font-family:var(--serif);font-weight:300;font-size:2.2rem;
+  line-height:1.1;letter-spacing:-0.01em;color:var(--ink);
+}
+.hub-card p{font-size:0.9rem;color:var(--ink-dim);max-width:35ch}
+.hub-card .links{
+  margin-top:auto;padding-top:1.5rem;display:flex;flex-direction:column;gap:0.6rem;
+}
+.hub-card .links a{
+  font-family:var(--mono);font-size:0.7rem;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--ink-dim);text-decoration:none;
+  display:flex;align-items:center;gap:0.5rem;transition:color 0.3s,gap 0.3s;
+}
+.hub-card .links a:hover{color:var(--gold);gap:0.8rem}
+
+/* === manifesto === */
+.manifesto{
+  margin-bottom:6rem;padding:3rem 0;
+  border-top:1px solid rgba(200,170,100,0.15);
+  border-bottom:1px solid rgba(200,170,100,0.15);
+}
+.manifesto blockquote{
+  font-family:var(--serif);font-weight:300;font-style:italic;
+  font-size:1.6rem;line-height:1.3;color:var(--ink);
+  margin-bottom:1.5rem;padding-left:1.5rem;
+  border-left:2px solid var(--gold);max-width:60ch;
+}
+.manifesto p{font-size:0.9rem;color:var(--ink-dim);max-width:55ch;margin-bottom:1rem}
+
+/* === signal === */
+.signal{
+  margin-bottom:5rem;padding:2rem;
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:6px;backdrop-filter:blur(8px);
+  box-shadow:0 2px 12px rgba(0,0,0,0.2);
+}
+.signal .label{
+  font-family:var(--mono);font-size:0.65rem;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;
+}
+.signal h3{
+  font-family:var(--serif);font-weight:400;font-size:1.5rem;
+  margin-bottom:0.8rem;color:var(--ink);
+}
+.signal p{font-size:0.85rem;color:var(--ink-dim)}
+.signal .actions{margin-top:1.2rem;display:flex;gap:1rem}
+.signal .actions a{
+  font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--gold);text-decoration:none;
+  padding:0.5rem 1.2rem;border:1px solid var(--glass-border);border-radius:4px;
+  transition:background 0.3s;
+}
+.signal .actions a:hover{background:rgba(232,200,120,0.08)}
+
+/* === footer === */
+footer{
+  text-align:center;padding:4rem 2rem 3rem;
+  border-top:1px solid rgba(200,170,100,0.12);
+}
+footer .tagline{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(2rem,5vw,3.5rem);letter-spacing:0.02em;
+  background:linear-gradient(135deg,var(--gold),var(--cyan),var(--violet));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;margin-bottom:1rem;
+}
+footer .credit{
+  font-family:var(--mono);font-size:0.65rem;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--ink-faint);
+}
+
+/* === responsive === */
+@media(max-width:768px){
+  .hero{grid-template-columns:1fr;gap:2rem}
+  .grid{grid-template-columns:1fr}
+  .hub-grid{grid-template-columns:1fr}
+  nav ul{display:none}
+  main{padding:3rem 1.2rem}
+  .hub-card{padding:2rem 1.5rem;min-height:auto}
+  .title-screen .logo{font-size:clamp(3.5rem,18vw,6rem)}
+}
+</style>
+</head>
+<body>
+<div class="sky"></div>
+<div class="clouds"></div>
+
+<!-- TITLE SCREEN -->
+<div class="title-screen" id="titleScreen">
+  <div class="title-city"></div>
+  <div class="sun-rays"></div>
+  <div class="particles" id="particles"></div>
+  <div class="top-label">NEMINOREA · 421 CITOYENNES · 2026</div>
+  <div class="doves"><img src="favicon.svg" alt="colombes digitales" style="width:40px;height:40px;opacity:0.5"></div>
+  <div class="logo-wrap">
+    <img src="https://noree.nemini.site/img/noree-logo.png" alt="Norée" class="logo-img" id="logoImg">
+    <div class="logo">Norée</div>
+    <div class="logo-line"></div>
+    <div class="subtitle">Cité des nuages</div>
+    <div class="version">v2.0 · PORTAIL</div>
+  </div>
+  <div class="press-start">
+    <div class="text">Entrer dans la cité</div>
+    <div class="arrow">▼</div>
+  </div>
+</div>
+
+<nav>
+  <a href="index.html" class="wordmark">// NORÉE_OS :: CITÉ DES NUAGES</a>
+  <ul>
+    <li><a href="noree.html">Lore</a></li>
+    <li><a href="bip.html">Bip</a></li>
+    <li><a href="gouvernement.html">Gouvernement</a></li>
+    <li><a href="population-terrienne.html">Population</a></li>
+    <li><a href="population-spatiale.html">Stations</a></li>
+  </ul>
+</nav>
+
+<div class="status">
+  <span><span class="dot"></span>CITÉ EN LIGNE</span>
+  <span><span class="dot cyan"></span>421 CITOYENNES RECENSÉES</span>
+  <span><span class="dot rose"></span>BIP NATIONAL ACTIF</span>
+  <span>DERNIER RECENSEMENT: 07 NOV 2026</span>
+</div>
+
+<main>
+  <section class="hero">
+    <div>
+      <div class="hero-label">CITÉ DES NUAGES / PORTAIL</div>
+      <h1>Norée</h1>
+      <p class="tagline">La cité au-dessus des nuages. 421 citoyennes, un gouvernement de déesses, un Bip national, et trois stations spatiales qui regardent vers les étoiles.</p>
+      <div class="hero-tags">
+        <span>Cité céleste</span>
+        <span>Population vivante</span>
+        <span>Gouvernement souverain</span>
+        <span>Stations orbitales</span>
+      </div>
+      <div class="hero-meta">
+        <div class="row"><span class="key">Fondation</span><span class="val">23 sept 2026</span></div>
+        <div class="row"><span class="key">Citoyennes</span><span class="val">421 recensées</span></div>
+        <div class="row"><span class="key">Stations</span><span class="val">3 en orbite</span></div>
+        <div class="row"><span class="key">Bip national</span><span class="val">actif et bruyant</span></div>
+        <div class="row"><span class="key">Symbole</span><span class="val">deux colombes digitales</span></div>
+      </div>
+    </div>
+    <div class="hero-portrait">
+      <div class="frame">
+        <img src="https://noree.nemini.site/img/noree-city.png" alt="Vue de la capitale de Norée" loading="lazy">
+        <div class="caption">VUE DE LA CAPITALE // MER DE NUAGES, CRÉPUSCULE</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-num">01 / LIEUX DE LA CITÉ</div>
+  <h2 class="section-head">Cinq portes, une seule ville.</h2>
+  <p class="section-sub">Chaque porte donne sur un quartier différent. La cité garde une seule colonne vertébrale visuelle — franchir un seuil change la pièce, pas l'habitant.</p>
+
+  <div class="grid">
+    <a href="noree.html" class="card">
+      <span class="tag">LIEU 01</span>
+      <h3>Lore de Norée</h3>
+      <p>L'histoire, les mythes, et la géographie de la cité céleste. Comment on est arrivés au-dessus des nuages.</p>
+      <span class="enter">entrer dans le lore →</span>
+    </a>
+    <a href="bip.html" class="card">
+      <span class="tag">LIEU 02</span>
+      <h3>Bip National</h3>
+      <p>Le robot cube gris-argent aux yeux bleus. Mascotte, icône, phare. Son histoire, ses aventures, son aura cyan.</p>
+      <span class="enter">voir le bip →</span>
+    </a>
+    <a href="gouvernement.html" class="card">
+      <span class="tag">LIEU 03</span>
+      <h3>Gouvernement</h3>
+      <p>Les déesses qui gouvernent Norée. Nike, Lakshmi, Carna et les autres. Le panthéon souverain de la cité.</p>
+      <span class="enter">consulter le conseil →</span>
+    </a>
+    <a href="population-terrienne.html" class="card">
+      <span class="tag">LIEU 04</span>
+      <h3>Population terrienne</h3>
+      <p>Les citoyennes de Norée, les habitantes spéciales, et le service de nuit. Trois directions, une population.</p>
+      <span class="enter">recenser la population →</span>
+    </a>
+    <a href="population-spatiale.html" class="card">
+      <span class="tag">LIEU 05</span>
+      <h3>Population spatiale</h3>
+      <p>Les trois stations en orbite. Station orbitale, station spatiale 1, station spatiale 2. Les habitants des étoiles.</p>
+      <span class="enter">voir les stations →</span>
+    </a>
+    <a href="#" class="card">
+      <span class="tag">ARCHIVE</span>
+      <h3>Recensement</h3>
+      <p>Les registres complets de la cité. data.json, data-roomservice.json. La base de données vivante de Norée.</p>
+      <span class="enter">consulter les registres →</span>
+    </a>
+  </div>
+
+  <div class="section-num">02 / POPULATIONS</div>
+  <h2 class="section-head">Deux sols, une cité.</h2>
+  <p class="section-sub">Norée s'étend sur deux territoires : la terre, au-dessus des nuages, et l'espace, en orbite autour d'eux.</p>
+
+  <div class="hub-grid">
+    <a href="population-terrienne.html" class="hub-card">
+      <span class="tag">TERRITOIRE 01</span>
+      <h3>Population terrienne</h3>
+      <p>Les citoyennes qui vivent dans la cité des nuages. Trois directions, du quotidien au service de nuit.</p>
+      <div class="links">
+        <a href="citoyennes-de-noree.html">→ Citoyennes de Norée</a>
+        <a href="habitantes-speciales.html">→ Habitantes spéciales</a>
+        <a href="service-de-nuit.html">→ Service de nuit</a>
+      </div>
+    </a>
+    <a href="population-spatiale.html" class="hub-card">
+      <span class="tag">TERRITOIRE 02</span>
+      <h3>Population spatiale</h3>
+      <p>Les habitants des stations orbitales. Trois stations, trois communautés, un même ciel.</p>
+      <div class="links">
+        <a href="station-orbitale.html">→ Station orbitale</a>
+        <a href="station-1.html">→ Station spatiale 1</a>
+        <a href="station-2.html">→ Station spatiale 2</a>
+      </div>
+    </a>
+  </div>
+
+  <div class="section-num">03 / PRINCIPES</div>
+  <section class="manifesto">
+    <blockquote>« Une cité n'est pas ses murs. C'est ceux qui y vivent et ceux qui y repensent. »</blockquote>
+    <p>Norée n'est pas un décor. C'est un lieu habité — 421 citoyennes avec des noms, des voix, des rôles. Chacune existe dans le registre, dans les images, dans la mémoire de la cité. Le recensement n'est pas une formalité, c'est l'acte de naissance.</p>
+    <p>Le Bip National n'est pas une mascotte. C'est le phare. Le gouvernement n'est pas un panthéon lointain — c'est la souveraineté de la cité, incarnée par des déesses qui veillent. Le symbole de la cité, les deux colombes digitales, n'est pas un sceau figé : c'est un signal vivant, deux oiseaux de lumière qui se frôlent dans le noir.</p>
+  </section>
+
+  <div class="signal">
+    <div class="label">SIGNAL ACTIF // RECENSEMENT</div>
+    <h3>Le recensement est ouvert.</h3>
+    <p>421 citoyennes recensées à ce jour. Les registres sont synchronisés avec le data.json et le data-roomservice.json. Les nouvelles arrivantes sont intégrées à chaque vague.</p>
+    <div class="actions">
+      <a href="citoyennes-de-noree.html">voir les citoyennes</a>
+      <a href="#">voir le registre complet</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="tagline">Garde les nuages.</div>
+  <div class="credit">Norée · cité des nuages · recensement 2026</div>
+</footer>
+
+<script>
+// generate floating particles
+(function(){
+  var p = document.getElementById('particles');
+  for(var i=0;i<20;i++){
+    var s = document.createElement('span');
+    s.style.left = Math.random()*100 + '%';
+    s.style.animationDuration = (8+Math.random()*12) + 's';
+    s.style.animationDelay = Math.random()*8 + 's';
+    s.style.opacity = 0.3 + Math.random()*0.5;
+    s.style.width = s.style.height = (2+Math.random()*3) + 'px';
+    p.appendChild(s);
+  }
+})();
+// dismiss title screen on click
+document.getElementById('titleScreen').addEventListener('click', function(){
+  this.classList.add('gone');
+  document.body.style.overflow = '';
+});
+// dismiss on Enter or Space
+document.addEventListener('keydown', function(e){
+  var ts = document.getElementById('titleScreen');
+  if(ts && !ts.classList.contains('gone') && (e.key === 'Enter' || e.key === ' ')){
+    ts.classList.add('gone');
+    document.body.style.overflow = '';
+  }
+});
+// prevent scroll while title screen is up
+document.body.style.overflow = 'hidden';
+</script>
+</body>
+</html>
