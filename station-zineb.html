@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Norée — Station Zineb</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@200;300;400;500&family=JetBrains+Mono:wght@300;400&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}html,body{overflow-x:hidden}
+:root{--bg:#1a1430;--ink:#f0eee8;--ink-dim:#c0b8a8;--ink-faint:#807868;--cyan:#7fd9c8;--violet:#c4a7ff;--gold:#e8c878;--glass:rgba(255,240,220,0.08);--glass-border:rgba(200,170,100,0.25);--serif:'Cormorant Garamond',serif;--sans:'Inter',sans-serif;--mono:'JetBrains Mono',monospace}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.7}
+.sky{position:fixed;inset:0;z-index:-2;pointer-events:none;background:radial-gradient(ellipse 90% 50% at 50% 100%,rgba(232,140,80,0.12),transparent 60%),linear-gradient(180deg,#2e2150 0%,#1a1432 70%,#161028 100%)}
+nav{position:sticky;top:0;z-index:100;background:rgba(26,20,48,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(200,170,100,0.15);padding:0.7rem 2rem;display:flex;align-items:center;justify-content:space-between}
+nav .wordmark{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;text-decoration:none}
+nav ul{display:flex;gap:1.8rem;list-style:none}
+nav a{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink-dim);text-decoration:none;transition:color 0.3s}
+nav a:hover{color:var(--gold)}
+main{max-width:900px;margin:0 auto;padding:5rem 2rem 3rem;position:relative;z-index:1}
+.back{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-faint);text-decoration:none;margin-bottom:3rem;display:inline-block;transition:color 0.3s}
+.back:hover{color:var(--gold)}
+.label{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--cyan);margin-bottom:1.5rem}
+h1{font-family:var(--serif);font-weight:300;font-size:clamp(3rem,8vw,5rem);line-height:0.95;margin-bottom:1rem;background:linear-gradient(135deg,#f0eee8 0%,#7fd9c8 50%,#c4a7ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.orbit{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:2.5rem}
+.hero-img{width:100%;border-radius:6px;border:1px solid var(--glass-border);margin-bottom:3rem;aspect-ratio:16/9;object-fit:cover}
+section{margin-bottom:3rem}
+h2{font-family:var(--serif);font-weight:400;font-size:1.9rem;margin-bottom:1rem;color:var(--ink)}
+p{font-size:0.95rem;color:var(--ink-dim);max-width:62ch;margin-bottom:1rem}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:3rem}
+.fact{padding:1.4rem 1.5rem;background:var(--glass);border:1px solid var(--glass-border);border-radius:8px}
+.fact .k{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--cyan);margin-bottom:0.4rem}
+.fact .v{font-family:var(--serif);font-size:1.25rem;color:var(--ink)}
+blockquote{border-left:2px solid var(--gold);padding:0.5rem 0 0.5rem 1.5rem;margin:2rem 0;font-family:var(--serif);font-size:1.3rem;font-style:italic;color:var(--ink)}
+blockquote footer{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink-faint);margin-top:0.6rem;font-style:normal}
+footer{text-align:center;padding:4rem 2rem 3rem;border-top:1px solid rgba(200,170,100,0.12)}
+footer .credit{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-faint)}
+@media(max-width:768px){nav ul{display:none}main{padding:3rem 1.2rem}}
+</style>
+</head>
+<body>
+<div class="sky"></div>
+<nav>
+  <a href="index.html" class="wordmark">// NORÉE_OS</a>
+  <ul>
+    <li><a href="noree.html">Lore</a></li>
+    <li><a href="bip.html">Bip</a></li>
+    <li><a href="gouvernement.html">Gouvernement</a></li>
+    <li><a href="population-terrienne.html">Population</a></li>
+    <li><a href="population-spatiale.html">Stations</a></li>
+  </ul>
+</nav>
+<main>
+  <a href="population-spatiale.html" class="back">← stations spatiales</a>
+  <div class="label">STATION ORBITALE · TERRE</div>
+  <h1>Station Zineb</h1>
+  <div class="orbit">ORBITE BASSE · LA DOYENNE</div>
+  <img src="https://noree.nemini.site/img/noree-stations.png" alt="La station Zineb en orbite" class="hero-img" loading="lazy">
+
+  <div class="facts">
+    <div class="fact"><div class="k">Altitude</div><div class="v">~400 km</div></div>
+    <div class="fact"><div class="k">Population</div><div class="v">Scientifiques &amp; civils</div></div>
+    <div class="fact"><div class="k">Statut</div><div class="v">Opérationnelle</div></div>
+    <div class="fact"><div class="k">Fondée</div><div class="v">La première</div></div>
+  </div>
+
+  <section>
+    <h2>La doyenne</h2>
+    <p>Zineb fut la première. Avant les longs voyages, avant les veilleurs de l'ailleurs, il fallut apprendre simplement à vivre au-dessus du monde. La station tourne autour de la Terre en quatre-vingt-dix minutes, et ses habitants voient seize levers de soleil par jour. Ils ne comptent plus.</p>
+    <p>C'est la seule station habitée autant par des scientifiques que par des gens ordinaires. Des familles, des cuisiniers, des jardiniers d'hydroponie, des enfants qui n'ont jamais marché sur un sol. La recherche s'y fait, mais elle n'y est pas la raison d'être. La raison d'être, c'est la vie en orbite elle-même.</p>
+  </section>
+
+  <section>
+    <h2>Le port</h2>
+    <p>Tout ce qui monte de Norée passe par Zineb. Accostage, transit, communication. C'est la porte d'entrée du ciel, et ses couloirs bruissent de départures. Ceux qui partent loin, vers TRAPPIST-1 ou vers le cœur de la galaxie, s'y arrêtent toujours une dernière nuit. Personne ne sait vraiment pourquoi. C'est le rituel.</p>
+  </section>
+
+  <blockquote>
+    « Depuis Zineb, la Terre entière tient dans un hublot. On apprend vite ce qui compte. »
+    <footer>— inscription gravée près du pont d'observation</footer>
+  </blockquote>
+
+  <section>
+    <h2>La vie à bord</h2>
+    <p>Une promenade circulaire fait le tour de la coque ; c'est là que les habitants marchent, au sens propre, puisque la course y est devenue le sport national. Les serres hydroponiques fournissent le thé, les tomates et les fraises, et la fraise de Zineb est célèbre dans tout le réseau. Les soirées se passent face à la Terre qui défile : on choisit son continent préféré et on le regarde passer.</p>
+  </section>
+</main>
+<footer>
+  <div class="credit">Norée · cité des nuages · 2026</div>
+</footer>
+</body>
+</html>
