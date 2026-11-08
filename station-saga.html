@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Norée — Station Orbitale Gamma</title>
+<title>Norée — Station du Sagittarius A*</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@200;300;400;500&family=JetBrains+Mono:wght@300;400&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}html,body{overflow-x:hidden}
 :root{--bg:#1a1430;--ink:#f0eee8;--ink-dim:#c0b8a8;--ink-faint:#807868;--cyan:#7fd9c8;--violet:#c4a7ff;--gold:#e8c878;--glass:rgba(255,240,220,0.08);--glass-border:rgba(200,170,100,0.25);--serif:'Cormorant Garamond',serif;--sans:'Inter',sans-serif;--mono:'JetBrains Mono',monospace}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.7}
-.sky{position:fixed;inset:0;z-index:-2;pointer-events:none;background:radial-gradient(ellipse 90% 50% at 50% 100%,rgba(232,140,80,0.12),transparent 60%),linear-gradient(180deg,#2e2150 0%,#1a1432 70%,#161028 100%)}
+.sky{position:fixed;inset:0;z-index:-2;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(196,167,255,0.10),transparent 60%),radial-gradient(ellipse 60% 40% at 50% 30%,rgba(232,140,80,0.08),transparent 70%),linear-gradient(180deg,#0a0a20 0%,#12102a 30%,#1a1430 70%,#161028 100%)}
 nav{position:sticky;top:0;z-index:100;background:rgba(26,20,48,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(200,170,100,0.15);padding:0.7rem 2rem;display:flex;align-items:center;justify-content:space-between}
 nav .wordmark{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;text-decoration:none}
 nav ul{display:flex;gap:1.8rem;list-style:none}
@@ -19,12 +19,13 @@ nav a:hover{color:var(--gold)}
 main{max-width:900px;margin:0 auto;padding:5rem 2rem 3rem;position:relative;z-index:1}
 .back{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-faint);text-decoration:none;margin-bottom:3rem;display:inline-block;transition:color 0.3s}
 .back:hover{color:var(--gold)}
-.stub{text-align:center;padding:4rem 2rem}
-.stub .label{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem}
-.stub h1{font-family:var(--serif);font-weight:300;font-size:clamp(2.5rem,6vw,4rem);line-height:0.95;margin-bottom:1rem;background:linear-gradient(135deg,#f0eee8 0%,#e8c878 50%,#7fd9c8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.stub .planet{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:3rem}
-.stub .pending{display:inline-block;padding:0.6rem 1.5rem;border:1px solid var(--glass-border);border-radius:30px;font-family:var(--mono);font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);background:var(--glass)}
-.stub p.desc{color:var(--ink-dim);max-width:45ch;margin:2rem auto;font-size:0.9rem}
+.label{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--cyan);margin-bottom:1.5rem}
+h1{font-family:var(--serif);font-weight:300;font-size:clamp(3rem,8vw,5rem);line-height:0.95;margin-bottom:1rem;background:linear-gradient(135deg,#f0eee8 0%,#c4a7ff 50%,#e8c878 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.orbit{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:2.5rem}
+section{margin-bottom:3rem}
+h2{font-family:var(--serif);font-weight:400;font-size:1.9rem;margin-bottom:1rem;color:var(--ink)}
+p{font-size:0.95rem;color:var(--ink-dim);max-width:62ch;margin-bottom:1rem}
+.pending{display:inline-block;padding:0.8rem 1.6rem;border:1px solid var(--glass-border);border-radius:999px;font-family:var(--mono);font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--violet);background:var(--glass)}
 footer{text-align:center;padding:4rem 2rem 3rem;border-top:1px solid rgba(200,170,100,0.12)}
 footer .credit{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-faint)}
 @media(max-width:768px){nav ul{display:none}main{padding:3rem 1.2rem}}
@@ -44,13 +45,17 @@ footer .credit{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.2em;te
 </nav>
 <main>
   <a href="population-spatiale.html" class="back">← stations spatiales</a>
-  <div class="stub">
-    <div class="label">STATION ORBITALE · 03</div>
-    <h1>Station Gamma</h1>
-    <div class="planet">ORBITE HAUTE · NORÉE</div>
-    <p class="desc">Troisième station orbitale de Norée. En construction. Les détails arriveront quand la cité sera prête à lever les yeux.</p>
-    <span class="pending">⊕ EN ATTENTE</span>
-  </div>
+  <div class="label">STATION EXTRÊME · CŒUR DE LA GALAXIE</div>
+  <h1>Station Sagittarius&nbsp;A*</h1>
+  <div class="orbit">BORDURE DU TROU NOIR · 26 000 ANNÉES-LUMIÈRE</div>
+
+  <section>
+    <h2>La plus extrême</h2>
+    <p>Au centre de la galaxie, là où tout converge, une station est posée à la bordure du trou noir supermassif. Ses habitants observent l'horizon des événements — la ligne où la lumière elle-même abandonne — et voient le temps ralentir autour d'eux. Ce qu'ils apprennent là-bas, aucun instrument depuis la Terre ne pourrait le mesurer.</p>
+    <p>La station est encore en équipage restreint. Son nom viendra quand on la connaîtra : à Norée, on ne baptise pas une station avant de savoir qui elle est.</p>
+  </section>
+
+  <span class="pending">◈ ÉQUIPAGE EN ROUTE — NOM À VENIR</span>
 </main>
 <footer>
   <div class="credit">Norée · cité des nuages · 2026</div>
